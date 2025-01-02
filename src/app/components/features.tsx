@@ -7,7 +7,6 @@ import {
   Waves, 
   Pause, 
   Battery, 
-  Map 
 } from "lucide-react"
 
 interface Feature {
