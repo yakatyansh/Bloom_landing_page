@@ -3,19 +3,147 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: rgb(255, 245, 247); /* Light pink background */
+  --foreground: #4a1c24; /* Deep pink for text */
+  --primary: #f472b6; /* Light pink primary */
+  --primary-foreground: #831843;
+  --secondary: #fdf2f8; /* Very light pink */
+  --secondary-foreground: #831843;
+  --muted: #fce7f3;
+  --muted-foreground: #9d174d;
+  --accent: #fbcfe8; /* Soft pink accent */
+  --accent-foreground: #831843;
+  --ring: #f472b6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a365d;
+    --foreground: #ebf8ff;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 245, 247),
+    rgb(253, 242, 248)
+  );
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes bloom {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes petal-wave {
+  0% {
+    transform: rotate(var(--rotation)) scale(0);
+  }
+  50% {
+    transform: rotate(var(--rotation)) scale(1.2);
+  }
+  100% {
+    transform: rotate(var(--rotation)) scale(1);
+  }
+}
+
+@keyframes center-bloom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bloom {
+  animation: bloom 1s ease-out forwards;
+}
+
+.animate-petals path {
+  animation: petal-wave 1.5s ease-out forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.animate-center {
+  animation: center-bloom 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
