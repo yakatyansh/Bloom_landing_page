@@ -30,7 +30,7 @@ export function BloomingFlower() {
         )}
         onLoadingComplete={() => setIsLoaded(true)}
         priority={currentFrame <= 10}
-        sizes="(max-width: 720px) 100vw, (max-width: 1200px) 53vw, 33vw"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
   )
