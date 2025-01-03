@@ -1,4 +1,4 @@
-import { Sparkles, Users, Globe2, Heart, Flower2, Target, Shield, Coffee } from "lucide-react"
+import { Sparkles, Users, Globe2, Heart,  Target, Shield, Coffee } from "lucide-react"
 import { Button } from "../components/ui/button"
 
 const teamMembers = [
