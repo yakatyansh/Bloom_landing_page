@@ -1,30 +1,26 @@
 import { Sparkles, Users, Globe2, Heart,  Target, Shield, Coffee } from "lucide-react"
 import { Button } from "../components/ui/button"
 
-const teamMembers = [
+const Synergies = [
   {
-    name: "Jack Jay",
-    role: "Founder & CEO",
-    image: "/team/jack.jpeg",
-    bio: "Former Product Lead at Meta, passionate about digital wellness"
+    name: "Relational Empowerment",
+    image: "/assets/relation.jpg",
+    bio: "Features like Orbits and Ripple Effects emphasize human connection, forming a relational foundation essential for a liquid democracy. These elements create trust and relational depth, which are key to effective delegation and collaboration."
   },
   {
-    name: "Grace Kay Matelich",
-    role: "Co-Founder",
-    image: "/team/gracw.jpeg",
-    bio: "AI researcher with focus on human-centered technology"
+    name: "Transparency and Collective Impact",
+    image: "/assets/bloomsphere.jpg",
+    bio: "The Bloomsphere visualizes collective outcomes, akin to tracking how policies and decisions ripple through a liquid democracy system. This fosters accountability and aligns with the democratic principle of informed decision-making."
   },
   {
-    name: "Steven Han",
-    role: "Head of R&D",
-    image: "/team/gracw.jpeg",
-    bio: "Award-winning UX designer specializing in mindful interfaces"
+    name: "Incentive Alignment",
+    image: "/assets/incentive.jpg",
+    bio: "Bloomscore motivates positive contributions, mirroring how liquid democracy rewards participation and thoughtful delegation. It ensures users remain engaged and incentivized to act responsibly."
   },
   {
-    name: "De Kai",
-    role: "Advisor",
-    image: "/team/images.png",
-    bio: "Psychology PhD with expertise in digital behavior"
+    name: "Decentralized Communities",
+    image: "/assets/decentralised.jpg",
+    bio: "Orbits act as dynamic hubs where users collaborate, debate, and co-create solutions, similar to local nodes in a liquid democracy framework. These can serve as spaces for dialogue, voting, and decision-making."
   }
 ]
 
@@ -115,9 +111,9 @@ export default function AboutPage() {
       {/* Team Section */}
       <section className="relative py-24 border-t border-purple-500/10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Our Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Core Synergies</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member) => (
+            {Synergies.map((member) => (
               <div key={member.name} className="group">
                 <div className="relative mb-4 rounded-xl overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0118] via-transparent opacity-60" />
@@ -128,7 +124,6 @@ export default function AboutPage() {
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-purple-100 mb-1">{member.name}</h3>
-                <p className="text-[#EC4899] font-medium mb-2">{member.role}</p>
                 <p className="text-purple-200/60">{member.bio}</p>
               </div>
             ))}

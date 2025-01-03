@@ -33,10 +33,6 @@ export function CTA() {
               Watch Demo
             </Button>
           </div>
-
-          <p className="mt-6 text-purple-200/60 text-sm">
-            No credit card required • 14-day free trial • Cancel anytime
-          </p>
         </div>
       </div>
     </section>
