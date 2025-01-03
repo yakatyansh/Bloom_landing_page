@@ -1,4 +1,8 @@
-export function BloomingFlower() {
+interface BloomingFlowerProps {
+  className?: string;
+}
+
+export function BloomingFlower({ className }: BloomingFlowerProps) {
   return (
     <svg
       width="400"
@@ -6,7 +10,7 @@ export function BloomingFlower() {
       viewBox="0 0 400 400"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="transition-transform duration-300 hover:scale-105"
+      className={`transition-transform duration-300 hover:scale-105 ${className}`}
     >
       {/* Background glow */}
       <circle 

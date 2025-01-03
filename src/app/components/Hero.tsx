@@ -19,7 +19,7 @@ export function Hero() {
           <div className="flex-1 text-center lg:text-left">
             <div className="space-y-4 mb-6">
               <div className="inline-block">
-                <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20 transition-all hover:animate-bloom-hover cursor-pointer">
                   Mindful Social Media
                 </span>
               </div>
@@ -39,14 +39,14 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button 
                 size="lg"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-none px-8 py-6 text-lg rounded-xl"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-none px-8 py-6 text-lg rounded-xl hover:animate-bloom-hover"
               >
                 Start BloomScrolling
               </Button>
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-purple-700 text-purple-300 hover:bg-purple-950/50 px-8 py-6 text-lg rounded-xl"
+                className="border-purple-700 text-purple-300 hover:bg-purple-950/50 px-8 py-6 text-lg rounded-xl hover:animate-bloom-hover"
               >
                 Watch Demo
               </Button>
@@ -54,11 +54,10 @@ export function Hero() {
           </div>
 
           <div className="flex-1 flex justify-center items-center">
-            <div className="relative w-96 h-96 flex items-center justify-center">
-              {/* Glow effect behind the flower */}
+            <div className="relative w-96 h-96 flex items-center justify-center cursor-pointer hover:animate-bloom-hover">
               <div className="absolute w-full h-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 blur-3xl rounded-full" />
               <div className="relative animate-float">
-                <BloomingFlower />
+                <BloomingFlower className="animate-bloom-flower" />
               </div>
             </div>
           </div>
