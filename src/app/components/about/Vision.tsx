@@ -6,7 +6,7 @@ export function Vision() {
           Elevating Human Consciousness
         </h1>
         <p className="text-xl text-gray-700 mb-8">
-          We're reimagining social connection for the digital age, creating a platform 
+          We&apos;re reimagining social connection for the digital age, creating a platform 
           where resonance matters more than engagement.
         </p>
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
