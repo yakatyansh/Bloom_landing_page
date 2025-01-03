@@ -66,7 +66,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-xl text-purple-200/80 mb-8">
-              We&aposre on a mission to transform social media into a force for personal growth and meaningful connections.
+              We are on a mission to transform social media into a force for personal growth and meaningful connections.
             </p>
           </div>
         </div>
