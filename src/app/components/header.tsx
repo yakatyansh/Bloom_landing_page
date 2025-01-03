@@ -1,87 +1,39 @@
-"use client"
-
-import Link from "next/link"
-import { useState } from "react"
 import { Button } from "./ui/button"
-import { Menu, X } from "lucide-react"
-
-interface NavItem {
-  label: string
-  href: string
-}
-
-const navItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
-]
+import Link from "next/link"
 
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
   return (
-    <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/80 backdrop-blur-sm">
+    <header className="fixed w-full z-50 backdrop-blur-md bg-[#0a0118]/80 border-b border-purple-500/10">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-xl font-bold text-pink-600">Bloom</span>
+          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-[#EC4899] to-[#A855F7] bg-clip-text text-transparent">
+            BloomScroll
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-pink-700 hover:text-pink-500 transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Button 
-              className="bg-pink-400 hover:bg-pink-500 text-white"
-            >
-              Get Started
-            </Button>
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link href="/features" className="text-purple-200/80 hover:text-purple-200 transition-colors">
+              Features
+            </Link>
+            <Link href="/about" className="text-purple-200/80 hover:text-purple-200 transition-colors">
+              About
+            </Link>
+            <Link href="/blog" className="text-purple-200/80 hover:text-purple-200 transition-colors">
+              Blog
+            </Link>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-pink-700"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-pink-100">
-            <nav className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-sm font-medium text-pink-700 hover:text-pink-500"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Button 
-                className="w-full bg-pink-400 hover:bg-pink-500 text-white"
-              >
-                Get Started
-              </Button>
-            </nav>
+          {/* CTA Buttons */}
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" className="text-purple-200 hover:bg-purple-500/10">
+              Sign In
+            </Button>
+            <Button className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:from-[#D946EF] hover:to-[#9333EA] text-white">
+              Get Started
+            </Button>
           </div>
-        )}
+        </div>
       </div>
     </header>
   )

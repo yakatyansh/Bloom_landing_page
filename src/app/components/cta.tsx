@@ -2,44 +2,43 @@ import { Button } from "./ui/button"
 
 export function CTA() {
   return (
-    <section className="container mx-auto px-4 py-16">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pink-500 to-pink-400 px-6 py-20 shadow-xl opacity-0 animate-scale-in">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white" />
-          <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white" />
-        </div>
+    <section className="relative bg-[#0a0118] py-24">
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-transparent" />
+      
+      <div className="container mx-auto px-4 relative">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            Ready to Transform Your{" "}
+            <span className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] bg-clip-text text-transparent">
+              Social Media Experience?
+            </span>
+          </h2>
+          
+          <p className="text-xl text-purple-200/80 mb-8 max-w-2xl mx-auto">
+            Join thousands of users who have already discovered a more mindful way to engage with social media.
+          </p>
 
-        {/* Content */}
-        <div className="relative">
-          <div className="flex flex-col items-center text-center">
-            <h2 className="max-w-2xl text-3xl font-bold text-white md:text-4xl opacity-0 animate-fade-in stagger-1">
-              Ready to Start Your Journey?
-            </h2>
-            <p className="mt-4 max-w-xl text-lg text-pink-50 opacity-0 animate-fade-in stagger-2">
-              Join thousands of users who are already transforming their digital experience with Bloom.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row opacity-0 animate-fade-in stagger-3">
-              <Button
-                size="lg"
-                className="bg-white text-pink-600 hover:bg-pink-50 border-2 border-transparent"
-              >
-                Get Started Free
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white/10"
-              >
-                Schedule Demo
-              </Button>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:from-[#D946EF] hover:to-[#9333EA] text-white px-8 py-6 text-lg rounded-xl"
+            >
+              Get Started Free
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="border-purple-400/30 text-purple-200 hover:bg-purple-500/10 px-8 py-6 text-lg rounded-xl"
+            >
+              Watch Demo
+            </Button>
           </div>
-        </div>
 
-        {/* Optional: Add decorative elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-200 to-transparent opacity-20" />
+          <p className="mt-6 text-purple-200/60 text-sm">
+            No credit card required • 14-day free trial • Cancel anytime
+          </p>
+        </div>
       </div>
     </section>
   )
-} 
+}
