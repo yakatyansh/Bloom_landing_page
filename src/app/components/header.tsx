@@ -19,7 +19,7 @@ export function Header() {
             <Link href="/about" className="text-purple-200/80 hover:text-purple-200 transition-colors">
               About
             </Link>
-            <Link href="/blog" className="text-purple-200/80 hover:text-purple-200 transition-colors">
+            <Link href="https://bloomscroll.substack.com/p/introducing-bloom" className="text-purple-200/80 hover:text-purple-200 transition-colors">
               Blog
             </Link>
           </nav>
