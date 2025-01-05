@@ -1,10 +1,10 @@
 "use client"
 
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, useMotionValue } from "framer-motion"
 import { Button } from "./ui/button"
 import { BloomingFlower } from "./BloomingFlower"
 import { Feat } from "./Feat"
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -26,14 +26,75 @@ export function Hero() {
   // Container transforms - removed unused variables
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
-  // Scroll indicator
-  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+  // Create a motion value for the percentage
+  const percentage = useMotionValue(0)
+  
+  // Update percentage based on scroll
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange(latest => {
+      const value = Math.min(Math.round((latest / 0.15) * 100), 100)
+      percentage.set(value)
+    })
+    return () => unsubscribe()
+  }, [scrollYProgress])
+
+  // Separate scroll indicator opacity that disappears at 100%
+  const scrollIndicatorOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.14, 0.15],
+    [1, 1, 0]
+  )
 
   // New opacity transform for content below the title
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
 
   return (
     <>
+      {/* Scroll indicator as a separate fixed element */}
+      <div className="fixed inset-x-0 bottom-8 flex justify-center z-50 pointer-events-none">
+        <motion.div 
+          className="flex flex-col items-center gap-2"
+          initial={{ opacity: 1 }}
+          style={{
+            opacity: useTransform(scrollYProgress, [0, 0.14, 0.15], [1, 1, 0])
+          }}
+        >
+          <p className="text-sm font-medium tracking-wider text-purple-200/80">
+            SCROLL TO FIX TEXT
+          </p>
+          
+          <motion.p className="text-sm font-medium bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
+            bg-clip-text text-transparent">
+            <motion.span>{percentage}</motion.span>%
+          </motion.p>
+
+          <motion.svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            animate={{ y: [0, 5, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: 0.2
+            }}
+          >
+            <path
+              d="M12 4L12 20M12 20L18 14M12 20L6 14"
+              stroke="rgb(233 213 255 / 0.8)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </motion.svg>
+        </motion.div>
+      </div>
+
+      {/* Main content */}
       <div ref={containerRef} className="relative bg-[#0a0118] h-[150vh] perspective-1000">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -159,61 +220,6 @@ export function Hero() {
                       Learn More
                     </Button>
                   </div>
-
-                  {/* Scroll indicator */}
-                  <motion.div 
-                    className="absolute left-1/2 -translate-x-1/2 bottom-8"
-                    style={{
-                      opacity: scrollIndicatorOpacity
-                    }}
-                  >
-                    <motion.div
-                      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                      style={{ 
-                        opacity: scrollIndicatorOpacity,
-                        transformStyle: "preserve-3d",
-                      }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1 }}
-                    >
-                      <motion.p 
-                        className="text-purple-200/80 text-sm font-medium tracking-wider"
-                        animate={{ y: [0, 5, 0] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          ease: "easeInOut"
-                        }}
-                      >
-                        SCROLL TO FIX TEXT
-                      </motion.p>
-                      <motion.svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        animate={{ y: [0, 5, 0] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                          delay: 0.2
-                        }}
-                      >
-                        <path
-                          d="M12 4L12 20M12 20L18 14M12 20L6 14"
-                          stroke="rgb(233 213 255 / 0.8)"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </motion.svg>
-                    </motion.div>
-                  </motion.div>
                 </motion.div>
               </motion.div>
             </motion.div>
