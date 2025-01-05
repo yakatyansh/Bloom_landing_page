@@ -147,3 +147,18 @@ body {
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
+
+/* Add these perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Optional: Add smooth scrolling to the html element */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  display: none;
+}

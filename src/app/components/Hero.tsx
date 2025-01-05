@@ -1,10 +1,14 @@
 "use client"
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "framer-motion"
 import { Button } from "./ui/button"
 import { BloomingFlower } from "./BloomingFlower"
 import { Feat } from "./Feat"
 import { useRef } from "react"
+
+function useParallax(value: MotionValue<number>, distance: number) {
+  return useTransform(value, [0, 1], [-distance, distance]);
+}
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -13,21 +17,35 @@ export function Hero() {
     offset: ["start start", "end start"]
   })
 
-  const textOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1])
-  const textX = useTransform(scrollYProgress, [0.1, 0.3], [-100, 0])
-  const flowerX = useTransform(scrollYProgress, [0.1, 0.3], [0, 50])
-  const flowerY = useTransform(scrollYProgress, [0, 0.3], [0, -100])
-  const flowerScale = useTransform(scrollYProgress, [0.1, 0.3], [1.2, 1])
+  // Flower transforms - appear and scale up as we scroll
+  const flowerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1])
+  const flowerScale = useTransform(scrollYProgress, [0, 0.15], [0.8, 1])
+  const flowerY = useTransform(scrollYProgress, [0.15, 0.3], [0, -50])
+
+  // Text transforms - start tilted, end straight when flower blooms
+  const textRotateX = useTransform(scrollYProgress, [0, 0.15], [-10, 0])
+  const textRotateY = useTransform(scrollYProgress, [0, 0.15], [10, 0])
+  const textY = useTransform(scrollYProgress, [0.15, 0.3], [0, 20])
+  
+  // Container transforms - separate from text rotation
+  const containerRotateX = useTransform(scrollYProgress, [0.15, 0.3], [0, 0])
+  const containerRotateY = useTransform(scrollYProgress, [0.15, 0.3], [0, 0])
+  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
+
+  // Scroll indicator
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
   return (
     <>
-      <div ref={containerRef} className="relative bg-[#0a0118] h-[150vh]">
+      <div ref={containerRef} className="relative bg-[#0a0118] h-[150vh] perspective-1000">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
           className="absolute inset-0"
+          style={{
+            perspective
+          }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-transparent" />
           <motion.div 
@@ -46,37 +64,79 @@ export function Hero() {
 
         <div className="sticky top-0 h-screen flex items-center">
           <div className="container mx-auto px-4">
-            <div className="relative flex flex-col items-center">
+            <motion.div 
+              className="relative flex flex-col items-center"
+              style={{
+                transformStyle: "preserve-3d"
+              }}
+            >
+              {/* Flower component - starts invisible */}
               <motion.div 
                 className="w-full max-w-md"
                 style={{ 
-                  x: flowerX,
+                  opacity: flowerOpacity,
+                  scale: flowerScale,
                   y: flowerY,
-                  scale: flowerScale
+                  transformStyle: "preserve-3d",
                 }}
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
               >
                 <BloomingFlower scrollProgress={scrollYProgress} />
               </motion.div>
 
+              {/* Text content - starts tilted, straightens with flower bloom */}
               <motion.div 
-                style={{ opacity: textOpacity, x: textX }}
+                style={{ 
+                  y: textY,
+                  transformStyle: "preserve-3d",
+                  rotateX: textRotateX,
+                  rotateY: textRotateY,
+                }}
                 className="w-full text-center lg:text-left mt-8"
-                initial={{ opacity: 0 }}
+                initial={{ 
+                  rotateX: -10,
+                  rotateY: 10,
+                  opacity: 1 
+                }}
               >
-                <motion.div className="inline-block mb-4">
-                  <span className="px-4 py-2 rounded-full bg-purple-500/10 text-purple-200 
-                    border border-purple-500/20 text-sm">
-                    Welcome to BloomScroll
+                <motion.h1 className="text-5xl md:text-7xl font-bold mb-4 text-white tracking-tight relative">
+                  <span className="relative inline-block" style={{ marginLeft: "0.5rem" }}>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        position: "absolute",
+                        right: "100%",
+                        opacity: useTransform(scrollYProgress, [0, 0.15], [0, 1]),
+                        x: useTransform(scrollYProgress, [0.15, 0.2], [0, 12])
+                      }}
+                    >
+                      B
+                    </motion.span>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        opacity: useTransform(scrollYProgress, [0, 0.15], [1, 0])
+                      }}
+                    >
+                      D
+                    </motion.span>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        position: "absolute",
+                        left: 0,
+                        opacity: useTransform(scrollYProgress, [0, 0.15], [0, 1]),
+                        x: useTransform(scrollYProgress, [0.15, 0.2], [0, 12])
+                      }}
+                    >
+                        L
+                    </motion.span>
                   </span>
-                </motion.div>
-
-                <motion.h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
-                  Transform Your{" "}
+                  <span style={{ marginLeft: "0.15rem" }}>OOM</span>
+                  {" "}
                   <span className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
-                    bg-clip-text text-transparent">
-                    Social Experience
+                    bg-clip-text text-transparent font-extrabold">
+                    Scroll
                   </span>
                 </motion.h1>
 
@@ -102,10 +162,14 @@ export function Hero() {
                 </motion.div>
               </motion.div>
 
+              {/* Scroll indicator */}
               <AnimatePresence>
                 <motion.div
                   className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                  style={{ opacity: scrollIndicatorOpacity }}
+                  style={{ 
+                    opacity: scrollIndicatorOpacity,
+                    transformStyle: "preserve-3d",
+                  }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
@@ -120,7 +184,7 @@ export function Hero() {
                       ease: "easeInOut"
                     }}
                   >
-                    SCROLL DOWN
+                    SCROLL TO FIX TEXT
                   </motion.p>
                   <motion.svg
                     width="24"
@@ -147,7 +211,7 @@ export function Hero() {
                   </motion.svg>
                 </motion.div>
               </AnimatePresence>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

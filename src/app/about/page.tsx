@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 import { useRef } from 'react'
 import { 
   Sparkles, 
@@ -12,6 +12,10 @@ import {
   Coffee 
 } from "lucide-react"
 import { Button } from "../components/ui/button"
+
+function useParallax(value: MotionValue<number>, distance: number) {
+  return useTransform(value, [0, 1], [-distance, distance]);
+}
 
 const Synergies = [
   {
@@ -61,9 +65,15 @@ const values = [
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll()
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 45])
+  const rotateY = useTransform(scrollYProgress, [0, 1], [0, -45])
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.2, 1])
+  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 2000])
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -80,12 +90,25 @@ export default function AboutPage() {
   }
 
   return (
-    <main className="bg-[#0a0118]" ref={containerRef}>
-      {/* Hero Section with Parallax */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <motion.main 
+      className="bg-[#0a0118] perspective-1000"
+      ref={containerRef}
+      style={{
+        perspective
+      }}
+    >
+      <motion.section 
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        style={{
+          rotateX,
+          rotateY,
+          scale,
+          transformStyle: "preserve-3d"
+        }}
+      >
         <motion.div 
           className="absolute inset-0 z-0"
-          style={{ y, opacity }}
+          style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '100%']), opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0]) }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-purple-800/10 to-transparent" />
           <motion.div 
@@ -139,11 +162,22 @@ export default function AboutPage() {
             and meaningful connections.
           </motion.p>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Stats Section with Counter Animation */}
-      <section className="relative py-32 border-t border-purple-500/10">
-        <div className="container mx-auto px-4">
+      <motion.section 
+        className="relative py-32 border-t border-purple-500/10"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: "translateZ(0)"
+        }}
+      >
+        <motion.div 
+          className="container mx-auto px-4"
+          style={{
+            rotateX: useParallax(scrollYProgress, 15),
+            transformStyle: "preserve-3d"
+          }}
+        >
           <motion.div 
             variants={staggerContainer}
             initial="initial"
@@ -186,12 +220,23 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      {/* Values Section with Hover Effects */}
-      <section className="relative py-32 border-t border-purple-500/10">
-        <div className="container mx-auto px-4">
+      <motion.section 
+        className="relative py-32 border-t border-purple-500/10"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: "translateZ(0)"
+        }}
+      >
+        <motion.div 
+          className="container mx-auto px-4"
+          style={{
+            rotateY: useParallax(scrollYProgress, -20),
+            transformStyle: "preserve-3d"
+          }}
+        >
           <motion.h2 
             variants={fadeInUp}
             initial="initial"
@@ -231,12 +276,23 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      {/* Synergies Section */}
-      <section className="relative py-32 border-t border-purple-500/10">
-        <div className="container mx-auto px-4">
+      <motion.section 
+        className="relative py-32 border-t border-purple-500/10"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: "translateZ(0)"
+        }}
+      >
+        <motion.div 
+          className="container mx-auto px-4"
+          style={{
+            rotateX: useParallax(scrollYProgress, -10),
+            transformStyle: "preserve-3d"
+          }}
+        >
           <motion.h2 
             variants={fadeInUp}
             initial="initial"
@@ -272,19 +328,31 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      {/* Enhanced CTA Section */}
-      <section className="relative py-32 border-t border-purple-500/10">
+      <motion.section 
+        className="relative py-32 border-t border-purple-500/10"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: "translateZ(0)"
+        }}
+      >
         <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent"
-        />
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          className="container mx-auto px-4"
+          style={{
+            scale: useTransform(scrollYProgress, [0.8, 1], [0.98, 1]),
+            transformStyle: "preserve-3d"
+          }}
+        >
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent"
+          />
+          <div className="max-w-3xl mx-auto text-center relative z-10">
             <motion.h2 
               variants={fadeInUp}
               initial="initial"
@@ -308,13 +376,13 @@ export default function AboutPage() {
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               <Button 
                 size="lg"
                 className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:from-[#D946EF] 
                   hover:to-[#9333EA] text-white transform transition-all duration-300
-                  hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20"
+                  hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 w-full sm:w-auto"
               >
                 Join BloomScroll
               </Button>
@@ -322,15 +390,15 @@ export default function AboutPage() {
                 size="lg"
                 variant="outline"
                 className="border-purple-400/30 text-purple-200 hover:bg-purple-500/10
-                  transform transition-all duration-300 hover:scale-105"
+                  transform transition-all duration-300 hover:scale-105 w-full sm:w-auto"
               >
                 Learn More
               </Button>
             </motion.div>
           </div>
-        </div>
-      </section>
-    </main>
+        </motion.div>
+      </motion.section>
+    </motion.main>
   )
 }
 

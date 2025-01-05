@@ -49,6 +49,10 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
   const rotate = useTransform(scrollProgress, [0, 0.8], [0, 360])
   const scale = useTransform(scrollProgress, [0, 0.8], [1, 0.8])
   const opacity = useTransform(scrollProgress, [0, 0.7, 0.8], [1, 1, 0])
+  
+  // Add new 3D transforms
+  const z = useTransform(scrollProgress, [0, 0.3], [0, 50])
+  const rotateX = useTransform(scrollProgress, [0, 0.3], [0, 15])
 
   return (
     <div className="w-full max-w-lg mx-auto flex items-center justify-center">
@@ -56,7 +60,14 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
         width="400" height="400" viewBox="0 0 400 400" fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={`transition-transform duration-300 hover:scale-105 ${className}`}
-        style={{ rotate, scale, opacity }}
+        style={{ 
+          rotate, 
+          scale, 
+          opacity,
+          z,
+          rotateX,
+          transformStyle: "preserve-3d"
+        }}
         animate={{ scale: [1, 1.02, 1] }}
         transition={pulseAnimation}
       >
