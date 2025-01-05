@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, MotionValue, useTransform } from "framer-motion"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 interface ScrollControlledRoseProps {
   scrollProgress: MotionValue<number>
@@ -12,11 +12,21 @@ export function ScrollControlledRose({
   scrollProgress, 
   totalFrames = 50 
 }: ScrollControlledRoseProps) {
-  const [loadedFrames, setLoadedFrames] = useState<number[]>([])
-  
   const frames = useMemo(() => 
     Array.from({ length: totalFrames }, (_, i) => i + 1), 
     [totalFrames]
+  )
+
+  // Create frame opacity transforms outside the map function
+  const frameOpacities = useMemo(() => 
+    frames.map(frameNumber => 
+      useTransform(
+        scrollProgress,
+        [0.2, 0.7],
+        [1, totalFrames]
+      )
+    ),
+    [frames, scrollProgress, totalFrames]
   )
 
   const currentFrame = useTransform(
@@ -27,7 +37,7 @@ export function ScrollControlledRose({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {frames.map((frameNumber) => {
+      {frames.map((frameNumber, index) => {
         const imagePath = `/assets/frames/frame-${frameNumber.toString().padStart(3, '0')}.png`
         
         return (
@@ -38,7 +48,7 @@ export function ScrollControlledRose({
             className="absolute w-full h-full object-contain pointer-events-none select-none"
             style={{
               opacity: useTransform(
-                currentFrame,
+                frameOpacities[index],
                 [frameNumber - 1, frameNumber, frameNumber + 1],
                 [0, 1, 0]
               ),
@@ -46,9 +56,6 @@ export function ScrollControlledRose({
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)'
-            }}
-            onLoad={() => {
-              setLoadedFrames(prev => [...prev, frameNumber])
             }}
             draggable="false"
           />
