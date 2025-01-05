@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "./ui/button"
 import { BloomingFlower } from "./BloomingFlower"
-import { Features } from "./Features"
+import { Feat } from "./Feat"
 import { useRef } from "react"
 
 export function Hero() {
@@ -152,7 +152,7 @@ export function Hero() {
         </div>
       </div>
       
-      <Features />
+      <Feat />
     </>
   )
 }
