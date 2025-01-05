@@ -29,6 +29,9 @@ export function Hero() {
   // Scroll indicator
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
+  // New opacity transform for content below the title
+  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
+
   return (
     <>
       <div ref={containerRef} className="relative bg-[#0a0118] h-[150vh] perspective-1000">
@@ -134,77 +137,85 @@ export function Hero() {
                   </span>
                 </motion.h1>
 
-                <motion.p className="text-xl text-purple-200/80 mb-6 max-w-2xl">
-                  Experience a more mindful way to engage with social media through our 
-                  innovative features and thoughtful design.
-                </motion.p>
-
-                <motion.div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
-                      hover:from-[#D946EF] hover:to-[#9333EA] text-white px-8 py-6"
-                  >
-                    Get Started
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    className="border-purple-400/30 text-purple-200 
-                      hover:bg-purple-500/10 px-8 py-6"
-                  >
-                    Learn More
-                  </Button>
-                </motion.div>
-              </motion.div>
-
-              {/* Scroll indicator */}
-              <AnimatePresence>
+                {/* Wrap all content below the title in a motion.div */}
                 <motion.div
-                  className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                  style={{ 
-                    opacity: scrollIndicatorOpacity,
-                    transformStyle: "preserve-3d",
+                  style={{
+                    opacity: contentOpacity
                   }}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
                 >
-                  <motion.p 
-                    className="text-purple-200/80 text-sm font-medium tracking-wider"
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut"
-                    }}
-                  >
-                    SCROLL TO FIX TEXT
+                  <motion.p className="text-xl text-purple-200/80 mb-6 max-w-2xl">
+                    Experience a more mindful way to engage with social media through our 
+                    innovative features and thoughtful design.
                   </motion.p>
-                  <motion.svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                      delay: 0.2
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <Button size="lg" className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
+                      text-white border-0">
+                      Get Started
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-purple-500/20 
+                      text-purple-200 hover:bg-purple-500/10">
+                      Learn More
+                    </Button>
+                  </div>
+
+                  {/* Scroll indicator */}
+                  <motion.div 
+                    className="absolute left-1/2 -translate-x-1/2 bottom-8"
+                    style={{
+                      opacity: scrollIndicatorOpacity
                     }}
                   >
-                    <path
-                      d="M12 4L12 20M12 20L18 14M12 20L6 14"
-                      stroke="rgb(233 213 255 / 0.8)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <motion.div
+                      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                      style={{ 
+                        opacity: scrollIndicatorOpacity,
+                        transformStyle: "preserve-3d",
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1 }}
+                    >
+                      <motion.p 
+                        className="text-purple-200/80 text-sm font-medium tracking-wider"
+                        animate={{ y: [0, 5, 0] }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                          ease: "easeInOut"
+                        }}
+                      >
+                        SCROLL TO FIX TEXT
+                      </motion.p>
+                      <motion.svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        animate={{ y: [0, 5, 0] }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                          ease: "easeInOut",
+                          delay: 0.2
+                        }}
+                      >
+                        <path
+                          d="M12 4L12 20M12 20L18 14M12 20L6 14"
+                          stroke="rgb(233 213 255 / 0.8)"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </motion.svg>
+                    </motion.div>
+                  </motion.div>
                 </motion.div>
-              </AnimatePresence>
+              </motion.div>
             </motion.div>
           </div>
         </div>
