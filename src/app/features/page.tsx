@@ -50,8 +50,8 @@ export default function FeaturePage() {
           A New Vision for Connection
         </h1>
         <p className="text-xl text-purple-200/80 max-w-3xl mx-auto px-4 leading-relaxed">
-          Bloom is more than a platform—it's a movement transforming digital interaction into a catalyst 
-          for collective growth. Discover how we're building sacred technology that serves humanity's 
+          Bloom is more than a platform—it&apos;s a movement transforming digital interaction into a catalyst 
+          for collective growth. Discover how we&apos;re building sacred technology that serves humanity&apos;s 
           highest potential.
         </p>
       </div>
