@@ -1,14 +1,10 @@
 "use client"
 
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "framer-motion"
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "./ui/button"
 import { BloomingFlower } from "./BloomingFlower"
 import { Feat } from "./Feat"
 import { useRef } from "react"
-
-function useParallax(value: MotionValue<number>, distance: number) {
-  return useTransform(value, [0, 1], [-distance, distance]);
-}
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -27,9 +23,7 @@ export function Hero() {
   const textRotateY = useTransform(scrollYProgress, [0, 0.15], [10, 0])
   const textY = useTransform(scrollYProgress, [0.15, 0.3], [0, 20])
   
-  // Container transforms - separate from text rotation
-  const containerRotateX = useTransform(scrollYProgress, [0.15, 0.3], [0, 0])
-  const containerRotateY = useTransform(scrollYProgress, [0.15, 0.3], [0, 0])
+  // Container transforms - removed unused variables
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
   // Scroll indicator
