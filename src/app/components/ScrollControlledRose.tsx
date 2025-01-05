@@ -24,19 +24,24 @@ export function ScrollControlledRose({
     [1, totalFrames]
   )
 
-  // Create a single opacity transform that we'll use for all frames
-  const opacity = useTransform(
-    currentFrame,
-    frames.map(f => f),
-    frames.map(() => 1),
-    {
-      clamp: false
+  // Pre-calculate all opacity transforms
+  const opacityTransforms = useMemo(() => {
+    const transforms = []
+    for (let i = 0; i < totalFrames; i++) {
+      transforms.push(
+        useTransform(
+          currentFrame,
+          [i, i + 1, i + 2],
+          [0, 1, 0]
+        )
+      )
     }
-  )
+    return transforms
+  }, [currentFrame, totalFrames])
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {frames.map((frameNumber) => {
+      {frames.map((frameNumber, index) => {
         const imagePath = `/assets/frames/frame-${frameNumber.toString().padStart(3, '0')}.png`
         
         return (
@@ -46,11 +51,7 @@ export function ScrollControlledRose({
             alt={`Rose frame ${frameNumber}`}
             className="absolute w-full h-full object-contain pointer-events-none select-none"
             style={{
-              opacity: useTransform(
-                opacity,
-                [0, 1],
-                [frameNumber === Math.round(currentFrame.get()) ? 1 : 0, 0]
-              ),
+              opacity: opacityTransforms[index],
               position: 'absolute',
               top: '50%',
               left: '50%',
