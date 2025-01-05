@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { 
   Sparkles, 
   Flower2, 
@@ -11,6 +11,7 @@ import {
   Pause, 
   Battery, 
 } from "lucide-react"
+import { useRef } from "react";
 
 interface Feat {
   title: string;
@@ -83,8 +84,14 @@ const features: Feat[] = [
 ];
 
 export function Feat() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
   return (
-    <section className="relative bg-[#0a0118] py-24 -mt-1">
+    <section ref={containerRef} className="relative bg-[#0a0118] py-24 -mt-1 overflow-hidden">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -108,10 +115,10 @@ export function Feat() {
 
       <div className="container mx-auto px-4 relative">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
@@ -121,23 +128,32 @@ export function Feat() {
             Discover a more mindful way to engage with social media through our innovative features
           </p>
         </motion.div>
+
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {features.map((feature) => (
+          {features.map((feature, index) => (
             <motion.div
               key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: "easeOut"
+              }}
               whileHover={{ 
-                y: -5,
+                y: -8,
                 scale: 1.02,
                 boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)"
               }}
               className="p-6 rounded-2xl bg-purple-500/5 border border-purple-500/10 
-                hover:border-purple-500/30 transition-all duration-300"
+                hover:border-purple-500/30 transition-all duration-300 backdrop-blur-sm"
             >
               <motion.div 
                 whileHover={{ scale: 1.1, rotate: 10 }}
@@ -147,8 +163,10 @@ export function Feat() {
               >
                 {feature.icon}
                 <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#EC4899]/20 
-                    to-[#A855F7]/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                    to-[#A855F7]/20 blur-xl group-hover:opacity-100 transition-all duration-300"
                 />
               </motion.div>
               <motion.h3 
@@ -157,11 +175,25 @@ export function Feat() {
               >
                 {feature.title}
               </motion.h3>
-              <p className="text-purple-200/80">{feature.description}</p>
+              <motion.p 
+                initial={{ opacity: 0.8 }}
+                whileHover={{ opacity: 1 }}
+                className="text-purple-200/80"
+              >
+                {feature.description}
+              </motion.p>
             </motion.div>
           ))}
         </motion.div>
       </div>
+
+      <motion.div 
+        className="fixed bottom-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] z-10"
+        style={{
+          opacity: useTransform(scrollYProgress, [0.65, 0.7], [0, 1])
+        }}
+      >
+      </motion.div>
     </section>
   )
 }
