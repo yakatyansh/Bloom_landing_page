@@ -13,23 +13,23 @@ export function Hero() {
     offset: ["start start", "end start"]
   })
 
-  // Flower transforms - appear and scale up as we scroll
+  // Flower transforms
   const flowerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1])
   const flowerScale = useTransform(scrollYProgress, [0, 0.15], [0.8, 1])
   const flowerY = useTransform(scrollYProgress, [0.15, 0.3], [0, -50])
 
-  // Text transforms - start tilted, end straight when flower blooms
+  // Text transforms
   const textRotateX = useTransform(scrollYProgress, [0, 0.15], [-10, 0])
   const textRotateY = useTransform(scrollYProgress, [0, 0.15], [10, 0])
   const textY = useTransform(scrollYProgress, [0.15, 0.3], [0, 20])
-  
-  // Container transforms - removed unused variables
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
-  // Create a motion value for the percentage
+  // Content opacity
+  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
+
+  // Percentage counter
   const percentage = useMotionValue(0)
   
-  // Update percentage based on scroll
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange(latest => {
       const value = Math.min(Math.round((latest / 0.15) * 100), 100)
@@ -37,16 +37,6 @@ export function Hero() {
     })
     return () => unsubscribe()
   }, [scrollYProgress])
-
-  // Separate scroll indicator opacity that disappears at 100%
-  const scrollIndicatorOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.14, 0.15],
-    [1, 1, 0]
-  )
-
-  // New opacity transform for content below the title
-  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
 
   return (
     <>
