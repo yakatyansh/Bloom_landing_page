@@ -24,18 +24,21 @@ export function ScrollControlledRose({
     [1, totalFrames]
   )
 
-  // Pre-calculate all the ranges we'll need
-  const opacityRanges = useMemo(() => 
-    frames.map(frame => ({
-      input: [frame - 1, frame, frame + 1],
-      output: [0, 1, 0]
-    })),
-    [frames]
+  // Create all frame opacity transforms up front
+  const frameOpacities = useMemo(() => 
+    frames.map(frameNumber => 
+      useTransform(
+        currentFrame,
+        [frameNumber - 1, frameNumber, frameNumber + 1],
+        [0, 1, 0]
+      )
+    ),
+    [frames, currentFrame]
   )
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {frames.map((frameNumber) => {
+      {frames.map((frameNumber, index) => {
         const imagePath = `/assets/frames/frame-${frameNumber.toString().padStart(3, '0')}.png`
         
         return (
@@ -45,11 +48,7 @@ export function ScrollControlledRose({
             alt={`Rose frame ${frameNumber}`}
             className="absolute w-full h-full object-contain pointer-events-none select-none"
             style={{
-              opacity: useTransform(
-                currentFrame,
-                opacityRanges[frameNumber - 1].input,
-                opacityRanges[frameNumber - 1].output
-              ),
+              opacity: frameOpacities[index],
               position: 'absolute',
               top: '50%',
               left: '50%',
