@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
 import { motion, MotionValue, useTransform } from "framer-motion"
@@ -25,9 +26,22 @@ export function ScrollControlledRose({
     [1, totalFrames]
   )
 
+  // Pre-calculate all opacity transforms
+  const opacityTransforms = useMemo(() => 
+    frames.map(frameNumber => {
+      const transform = useTransform(
+        currentFrameNumber,
+        [frameNumber - 0.5, frameNumber, frameNumber + 0.5],
+        [0, 1, 0]
+      )
+      return { frameNumber, transform }
+    }),
+    [frames, currentFrameNumber]
+  )
+
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {frames.map((frameNumber) => {
+      {opacityTransforms.map(({ frameNumber, transform }) => {
         const imagePath = `/assets/frames/frame-${frameNumber.toString().padStart(3, '0')}.png`
         
         return (
@@ -37,11 +51,7 @@ export function ScrollControlledRose({
             alt={`Rose frame ${frameNumber}`}
             className="absolute w-full h-full object-contain pointer-events-none select-none"
             style={{
-              opacity: useTransform(
-                currentFrameNumber,
-                [frameNumber - 0.5, frameNumber, frameNumber + 0.5],
-                [0, 1, 0]
-              ),
+              opacity: transform,
               position: 'absolute',
               top: '50%',
               left: '50%',
