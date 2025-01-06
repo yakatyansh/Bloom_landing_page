@@ -12,14 +12,11 @@ export function CTA() {
     offset: ["start start", "end end"]
   })
 
-  // Transform values for initial title timing
   const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
   const titleY = useTransform(scrollYProgress, [0, 0.2], [20, 0])
   
-  // Transform values for rose timing
   const roseOpacity = useTransform(scrollYProgress, [0.1, 0.2], [0, 1])
   
-  // Transform values for CTA content timing
   const contentOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 1])
   const contentY = useTransform(scrollYProgress, [0.8, 0.9], [20, 0])
 
@@ -28,7 +25,6 @@ export function CTA() {
       ref={containerRef} 
       className="relative bg-[#0a0118] min-h-[150vh] py-24"
     >
-      {/* Background effects */}
       <motion.div 
         className="absolute inset-0"
         initial={{ opacity: 0 }}
@@ -51,9 +47,8 @@ export function CTA() {
       </motion.div>
       
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
-        {/* Initial Title */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8"
           style={{
             opacity: titleOpacity,
             y: titleY
