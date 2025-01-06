@@ -12,18 +12,19 @@ export function CTA() {
     offset: ["start start", "end end"]
   })
 
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
-  const titleY = useTransform(scrollYProgress, [0, 0.2], [20, 0])
+  const roseOpacity = useTransform(
+    scrollYProgress, 
+    [0, 0.1],
+    [1, 1]
+  )
   
-  const roseOpacity = useTransform(scrollYProgress, [0.1, 0.2], [0, 1])
-  
-  const contentOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 1])
-  const contentY = useTransform(scrollYProgress, [0.8, 0.9], [20, 0])
+  const contentOpacity = useTransform(scrollYProgress, [0.6, 0.7], [0, 1])
+  const contentY = useTransform(scrollYProgress, [0.6, 0.7], [20, 0])
 
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-[#0a0118] min-h-[150vh] py-24"
+      className="relative bg-[#0a0118] min-h-[200vh] py-24"
     >
       <motion.div 
         className="absolute inset-0"
@@ -47,24 +48,6 @@ export function CTA() {
       </motion.div>
       
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
-        <motion.div 
-          className="text-center mb-8"
-          style={{
-            opacity: titleOpacity,
-            y: titleY
-          }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Experience the{" "}
-            <span className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] bg-clip-text text-transparent">
-              Transformation
-            </span>
-          </h2>
-          <p className="text-xl text-purple-200/80">
-            Watch as your journey unfolds
-          </p>
-        </motion.div>
-
         {/* Rose Animation */}
         <motion.div 
           className="w-[500px] h-[500px] mb-8"
