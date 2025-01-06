@@ -11,7 +11,6 @@ import {
   Shield, 
   Coffee 
 } from "lucide-react"
-import { Button } from "../components/ui/button"
 import { CTA } from '../components/cta'
 
 function useParallax(value: MotionValue<number>, distance: number) {
