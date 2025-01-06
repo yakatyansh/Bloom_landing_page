@@ -38,12 +38,6 @@ export function Hero() {
     return () => unsubscribe()
   }, [scrollYProgress])
 
-  // Separate scroll indicator opacity that disappears at 100%
-  const scrollIndicatorOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.14, 0.15],
-    [1, 1, 0]
-  )
 
   // New opacity transform for content below the title
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])

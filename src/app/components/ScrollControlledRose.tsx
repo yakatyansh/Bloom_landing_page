@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
+/* eslint-disable react-hooks/rules-of-hooks */
 import { motion, MotionValue, useTransform } from "framer-motion"
 import { useMemo } from "react"
 
@@ -14,6 +13,7 @@ function useFrameTransitions(currentFrame: MotionValue<number>, totalFrames: num
   return useMemo(() => {
     const transitions = []
     for (let i = 1; i <= totalFrames; i++) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       transitions.push(
         useTransform(
           currentFrame,
