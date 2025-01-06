@@ -12,6 +12,7 @@ import {
   Coffee 
 } from "lucide-react"
 import { Button } from "../components/ui/button"
+import { CTA } from '../components/cta'
 
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance]);
@@ -338,65 +339,7 @@ export default function AboutPage() {
           transform: "translateZ(0)"
         }}
       >
-        <motion.div 
-          className="container mx-auto px-4"
-          style={{
-            scale: useTransform(scrollYProgress, [0.8, 1], [0.98, 1]),
-            transformStyle: "preserve-3d"
-          }}
-        >
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent"
-          />
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <motion.h2 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold mb-6 text-white"
-            >
-              Join Our Journey
-            </motion.h2>
-            <motion.p 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              className="text-xl text-purple-200/80 mb-8"
-            >
-              Be part of the movement to transform social media into a more mindful space.
-            </motion.p>
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <Button 
-                size="lg"
-                className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:from-[#D946EF] 
-                  hover:to-[#9333EA] text-white transform transition-all duration-300
-                  hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 w-full sm:w-auto"
-              >
-                Join BloomScroll
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-purple-400/30 text-purple-200 hover:bg-purple-500/10
-                  transform transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-              >
-                Learn More
-              </Button>
-            </motion.div>
-          </div>
-        </motion.div>
+        <CTA />
       </motion.section>
     </motion.main>
   )
