@@ -48,7 +48,6 @@ export function CTA() {
       </motion.div>
       
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
-        {/* Rose Animation */}
         <motion.div 
           className="w-[500px] h-[500px] mb-8"
           style={{
@@ -58,7 +57,6 @@ export function CTA() {
           <ScrollControlledRose scrollProgress={scrollYProgress} />
         </motion.div>
 
-        {/* CTA Content - appears after rose blooms */}
         <motion.div 
           className="max-w-4xl mx-auto text-center"
           style={{

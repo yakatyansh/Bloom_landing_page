@@ -12,7 +12,6 @@ export function ParticleBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Set canvas size
     const setCanvasSize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -20,7 +19,6 @@ export function ParticleBackground() {
     setCanvasSize()
     window.addEventListener('resize', setCanvasSize)
 
-    // Particle configuration
     const particles: Array<{
       x: number
       y: number
@@ -49,13 +47,11 @@ export function ParticleBackground() {
         particle.x += particle.speedX
         particle.y += particle.speedY
 
-        // Wrap particles around screen
         if (particle.x > canvas.width) particle.x = 0
         if (particle.x < 0) particle.x = canvas.width
         if (particle.y > canvas.height) particle.y = 0
         if (particle.y < 0) particle.y = canvas.height
 
-        // Draw particle
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
         ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'

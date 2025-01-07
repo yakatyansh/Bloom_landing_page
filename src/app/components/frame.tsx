@@ -10,7 +10,7 @@ export function BloomingFlower() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFrame((prev) => prev === TOTAL_FRAMES ? 1 : prev + 1)
-    }, 40) // 40ms between frames for smooth animation (25fps)
+    }, 40) 
 
     return () => clearInterval(interval)
   }, [])

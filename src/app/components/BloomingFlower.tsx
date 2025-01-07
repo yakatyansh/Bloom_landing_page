@@ -7,7 +7,6 @@ interface BloomingFlowerProps {
   scrollProgress: MotionValue<number>;
 }
 
-// Common animation configurations
 const pulseAnimation = {
   duration: 4,
   repeat: Infinity,
@@ -15,7 +14,6 @@ const pulseAnimation = {
   ease: "easeInOut"
 }
 
-// Petal configurations
 const petalLayers = [
   {
     id: 'back',
@@ -50,7 +48,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
   const scale = useTransform(scrollProgress, [0, 0.8], [1, 0.8])
   const opacity = useTransform(scrollProgress, [0, 0.7, 0.8], [1, 1, 0])
   
-  // Add new 3D transforms
   const z = useTransform(scrollProgress, [0, 0.3], [0, 50])
   const rotateX = useTransform(scrollProgress, [0, 0.3], [0, 15])
 
@@ -71,7 +68,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
         animate={{ scale: [1, 1.02, 1] }}
         transition={pulseAnimation}
       >
-        {/* Background glow */}
         <motion.circle 
           cx="200" cy="200" r="120"
           fill="url(#glowGradient)" 
@@ -81,8 +77,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
           }}
           transition={pulseAnimation}
         />
-
-        {/* Render petal layers */}
         {petalLayers.map(layer => (
           [0, 45, 90, 135, 180, 225, 270, 315].map((rotation, index) => (
             <motion.g 
@@ -108,7 +102,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
           ))
         ))}
 
-        {/* Center and sparkles remain unchanged */}
         <motion.circle 
           cx="200" 
           cy="200" 
@@ -126,7 +119,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
           }}
         />
 
-        {/* Enhanced sparkles */}
         {[0, 72, 144, 216, 288].map((rotation, index) => (
           <motion.circle
             key={`sparkle-${index}`}
@@ -148,7 +140,6 @@ export function BloomingFlower({ className, scrollProgress }: BloomingFlowerProp
           />
         ))}
 
-        {/* Enhanced gradients */}
         <defs>
           <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#EC4899" stopOpacity="0.4">

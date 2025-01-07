@@ -21,7 +21,7 @@ export function Header() {
   ]
 
   if (!mounted) {
-    return null // Prevent hydration mismatch by not rendering until mounted
+    return null 
   }
 
   return (

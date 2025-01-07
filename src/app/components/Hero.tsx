@@ -13,23 +13,21 @@ export function Hero() {
     offset: ["start start", "end start"]
   })
 
-  // Flower transforms - appear and scale up as we scroll
+
   const flowerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1])
   const flowerScale = useTransform(scrollYProgress, [0, 0.15], [0.8, 1])
   const flowerY = useTransform(scrollYProgress, [0.15, 0.3], [0, -50])
 
-  // Text transforms - start tilted, end straight when flower blooms
   const textRotateX = useTransform(scrollYProgress, [0, 0.15], [-10, 0])
   const textRotateY = useTransform(scrollYProgress, [0, 0.15], [10, 0])
   const textY = useTransform(scrollYProgress, [0.15, 0.3], [0, 20])
-  
-  // Container transforms - removed unused variables
+ 
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
-  // Create a motion value for the percentage
+
   const percentage = useMotionValue(0)
   
-  // Update percentage based on scroll
+
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange(latest => {
       const value = Math.min(Math.round((latest / 0.15) * 100), 100)
@@ -39,12 +37,12 @@ export function Hero() {
   }, [scrollYProgress])
 
 
-  // New opacity transform for content below the title
+
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
 
   return (
     <>
-      {/* Scroll indicator as a separate fixed element */}
+
       <div className="fixed inset-x-0 bottom-8 flex justify-center z-50 pointer-events-none">
         <motion.div 
           className="flex flex-col items-center gap-2"
@@ -88,7 +86,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Main content */}
       <div ref={containerRef} className="relative bg-[#0a0118] h-[150vh] perspective-1000">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -122,7 +119,6 @@ export function Hero() {
                 transformStyle: "preserve-3d"
               }}
             >
-              {/* Flower component - starts invisible */}
               <motion.div 
                 className="w-full max-w-md"
                 style={{ 
@@ -136,7 +132,6 @@ export function Hero() {
                 <BloomingFlower scrollProgress={scrollYProgress} />
               </motion.div>
 
-              {/* Text content - starts tilted, straightens with flower bloom */}
               <motion.div 
                 style={{ 
                   y: textY,
@@ -192,7 +187,6 @@ export function Hero() {
                   </span>
                 </motion.h1>
 
-                {/* Wrap all content below the title in a motion.div */}
                 <motion.div
                   style={{
                     opacity: contentOpacity
