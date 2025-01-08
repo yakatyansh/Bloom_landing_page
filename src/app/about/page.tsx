@@ -14,6 +14,7 @@ import {
 import { CTA } from '../components/cta'
 import { ParticleBackground } from '../components/ParticleBackground'
 import { GlowingCursor } from '../components/GlowingCursor'
+import Image from 'next/image'
 
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance]);
@@ -183,10 +184,14 @@ export default function AboutPage() {
 
   const { x, y } = useMousePosition()
 
-  const synergiesTransforms = Synergies.map((_, index) => ({
-    yOffset: useTransform(scrollYProgress, [0, 1], [0, (index % 2 === 0 ? 50 : -50)]),
-    opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.6])
-  }))
+  const synergiesYOffsets = [
+    useTransform(scrollYProgress, [0, 1], [0, 50]),
+    useTransform(scrollYProgress, [0, 1], [0, -50]),
+    useTransform(scrollYProgress, [0, 1], [0, 50]),
+    useTransform(scrollYProgress, [0, 1], [0, -50])
+  ]
+
+  const synergiesOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.6])
 
   return (
     <>
@@ -437,18 +442,20 @@ export default function AboutPage() {
                   <motion.div 
                     className="relative mb-4 rounded-xl overflow-hidden"
                     style={{
-                      y: synergiesTransforms[i].yOffset
+                      y: synergiesYOffsets[i]
                     }}
                   >
                     <motion.div 
                       className="absolute inset-0 bg-gradient-to-t from-[#0a0118] via-transparent"
                       style={{
-                        opacity: synergiesTransforms[i].opacity
+                        opacity: synergiesOpacity
                       }}
                     />
-                    <img
+                    <Image
                       src={synergy.image}
                       alt={synergy.name}
+                      width={400}
+                      height={400}
                       className="w-full aspect-square object-cover transform transition-transform duration-700 group-hover:scale-105"
                     />
                   </motion.div>
