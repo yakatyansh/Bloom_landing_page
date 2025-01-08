@@ -6,17 +6,6 @@ interface ScrollControlledRoseProps {
   scrollProgress: MotionValue<number>
 }
 
-// Add these new animations and effects
-const petalHoverAnimation = {
-  scale: 1.03,
-  filter: "drop-shadow(0px 0px 3px rgba(236, 72, 153, 0.3))",
-  transition: {
-    type: "spring",
-    stiffness: 250,
-    damping: 25
-  }
-}
-
 export function ScrollControlledRose({ scrollProgress }: ScrollControlledRoseProps) {
 
   const corePetalOpacities = [
@@ -90,7 +79,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             fillOpacity={0.95}
             transform={`rotate(${rotation}, 100, 100)`}
             style={{ opacity: corePetalOpacities[index] }}
-            whileHover={petalHoverAnimation}
           />
         ))}
 
@@ -102,7 +90,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             fillOpacity={0.9}
             transform={`rotate(${rotation}, 100, 100)`}
             style={{ opacity: innerPetalOpacities[index] }}
-            whileHover={petalHoverAnimation}
           />
         ))}
 
@@ -114,7 +101,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             fillOpacity={0.85}
             transform={`rotate(${rotation}, 100, 100)`}
             style={{ opacity: middlePetalOpacities[index] }}
-            whileHover={petalHoverAnimation}
           />
         ))}
 
@@ -126,7 +112,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             fillOpacity={0.8}
             transform={`rotate(${rotation}, 100, 100)`}
             style={{ opacity: outerPetalOpacities[index] }}
-            whileHover={petalHoverAnimation}
           />
         ))}
 
@@ -152,10 +137,7 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           </radialGradient>
         </defs>
 
-        <motion.g 
-          style={{ opacity: stamenOpacity }}
-          whileHover={{ scale: 1.05 }}
-        >
+        <motion.g style={{ opacity: stamenOpacity }}>
           <motion.circle 
             cx="100" 
             cy="100" 
@@ -174,10 +156,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
               strokeWidth="1.5"
               fill="#F0ABFC"
               transform={`rotate(${rotation}, 100, 100)`}
-              whileHover={{
-                scale: 1.1,
-                filter: "drop-shadow(0px 0px 2px rgba(217, 70, 239, 0.3))"
-              }}
             />
           ))}
         </motion.g>
