@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 
 export function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -35,6 +34,7 @@ export function ParticleBackground() {
         opacity: Math.random() * 0.5 + 0.2
       })
     }
+
     function animate() {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)

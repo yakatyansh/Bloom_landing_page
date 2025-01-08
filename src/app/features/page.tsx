@@ -4,13 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
 import { CTA } from '../components/cta'
 import { 
-  Sparkles, 
-  Users, 
-  Globe2, 
-  Heart, 
-  Target, 
-  Shield, 
-  Coffee,
+  Shield,
   Orbit,
   Flower2,
   Gauge,
@@ -20,7 +14,6 @@ import {
   Zap
 } from "lucide-react"
 
-// Add the same mouse position hook
 function useMousePosition() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 

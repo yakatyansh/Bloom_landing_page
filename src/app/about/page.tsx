@@ -33,23 +33,6 @@ function useMousePosition() {
   return mousePosition
 }
 
-function useMouseMove() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX - window.innerWidth / 2) * 0.005,
-        y: (e.clientY - window.innerHeight / 2) * 0.005
-      })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  return mousePosition
-}
-
 function Counter({ from, to, duration = 2 }: { from: number; to: number; duration?: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null)
   
@@ -196,6 +179,11 @@ export default function AboutPage() {
   }
 
   const { x, y } = useMousePosition()
+
+  const synergiesTransforms = Synergies.map((_, index) => ({
+    yOffset: useTransform(scrollYProgress, [0, 1], [0, (index % 2 === 0 ? 50 : -50)]),
+    opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.6])
+  }))
 
   return (
     <>
@@ -421,7 +409,7 @@ export default function AboutPage() {
               Core Synergies
             </motion.h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {Synergies.map((synergy, index) => (
+              {Synergies.map((synergy, i) => (
                 <motion.div 
                   key={synergy.name}
                   initial={{ opacity: 0, y: 20 }}
@@ -437,21 +425,19 @@ export default function AboutPage() {
                     }
                   }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: i * 0.1 }}
                   className="group relative perspective-1000"
                 >
                   <motion.div 
                     className="relative mb-4 rounded-xl overflow-hidden"
                     style={{
-                      y: useTransform(scrollYProgress, 
-                        [0, 1], 
-                        [0, (index % 2 === 0 ? 50 : -50)])
+                      y: synergiesTransforms[i].yOffset
                     }}
                   >
                     <motion.div 
                       className="absolute inset-0 bg-gradient-to-t from-[#0a0118] via-transparent"
                       style={{
-                        opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.6])
+                        opacity: synergiesTransforms[i].opacity
                       }}
                     />
                     <img
