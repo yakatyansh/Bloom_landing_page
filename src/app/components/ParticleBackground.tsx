@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 export function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -12,12 +13,8 @@ export function ParticleBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    setCanvasSize()
-    window.addEventListener('resize', setCanvasSize)
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
 
     const particles: Array<{
       x: number
@@ -25,25 +22,24 @@ export function ParticleBackground() {
       size: number
       speedX: number
       speedY: number
+      opacity: number
     }> = []
 
-    const createParticles = () => {
-      const particleCount = 50
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2 + 0.5,
-          speedX: (Math.random() - 0.5) * 0.5,
-          speedY: (Math.random() - 0.5) * 0.5,
-        })
-      }
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedX: Math.random() * 0.5 - 0.25,
+        speedY: Math.random() * 0.5 - 0.25,
+        opacity: Math.random() * 0.5 + 0.2
+      })
     }
-
-    const animate = () => {
+    function animate() {
+      if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      particles.forEach((particle) => {
+      
+      particles.forEach(particle => {
         particle.x += particle.speedX
         particle.y += particle.speedY
 
@@ -54,26 +50,28 @@ export function ParticleBackground() {
 
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
+        ctx.fillStyle = `rgba(236, 72, 153, ${particle.opacity})`
         ctx.fill()
       })
 
       requestAnimationFrame(animate)
     }
 
-    createParticles()
     animate()
 
-    return () => {
-      window.removeEventListener('resize', setCanvasSize)
+    const handleResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
     }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none"
-      style={{ opacity: 0.5 }}
+      className="fixed inset-0 pointer-events-none z-0"
     />
   )
 }
