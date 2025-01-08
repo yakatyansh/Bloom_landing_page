@@ -18,7 +18,7 @@ const petalHoverAnimation = {
 }
 
 export function ScrollControlledRose({ scrollProgress }: ScrollControlledRoseProps) {
-  // Core petals opacity
+
   const corePetalOpacities = [
     useTransform(scrollProgress, [0.1, 0.13], [0, 1]),
     useTransform(scrollProgress, [0.13, 0.16], [0, 1]),
@@ -30,7 +30,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
     useTransform(scrollProgress, [0.31, 0.34], [0, 1]),
   ]
 
-  // Inner petals opacity
   const innerPetalOpacities = [
     useTransform(scrollProgress, [0.34, 0.37], [0, 1]),
     useTransform(scrollProgress, [0.37, 0.40], [0, 1]),
@@ -66,10 +65,9 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
     useTransform(scrollProgress, [0.97, 1.0], [0, 1]),
   ]
 
-  // Stamen opacity
+
   const stamenOpacity = useTransform(scrollProgress, [0.25, 0.28], [0, 1])
 
-  // Add subtle rotation animation
   const rotationProgress = useTransform(scrollProgress, [0, 1], [0, 15])
 
   return (
@@ -84,7 +82,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           rotate: rotationProgress
         }}
       >
-        {/* Core Petals with enhanced gradients */}
         {[0, 45, 90, 135, 180, 225, 270, 315].map((rotation, index) => (
           <motion.path
             key={`core-${rotation}`}
@@ -97,7 +94,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           />
         ))}
 
-        {/* Inner Petals with shimmer */}
         {[22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].map((rotation, index) => (
           <motion.path
             key={`inner-${rotation}`}
@@ -110,7 +106,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           />
         ))}
 
-        {/* Middle Petals with enhanced depth */}
         {[0, 45, 90, 135, 180, 225, 270, 315].map((rotation, index) => (
           <motion.path
             key={`middle-${rotation}`}
@@ -123,7 +118,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           />
         ))}
 
-        {/* Outer Petals with soft glow */}
         {[22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].map((rotation, index) => (
           <motion.path
             key={`outer-${rotation}`}
@@ -136,7 +130,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           />
         ))}
 
-        {/* Add gradient definitions */}
         <defs>
           <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#FF3B9A" />
@@ -159,12 +152,10 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
           </radialGradient>
         </defs>
 
-        {/* Enhanced Stamen */}
         <motion.g 
           style={{ opacity: stamenOpacity }}
           whileHover={{ scale: 1.1 }}
         >
-          {/* Center with glow */}
           <motion.circle 
             cx="100" 
             cy="100" 
@@ -175,7 +166,6 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             }}
           />
           
-          {/* Animated Stamens */}
           {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((rotation) => (
             <motion.path
               key={`stamen-${rotation}`}
