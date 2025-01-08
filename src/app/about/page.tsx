@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { 
   Sparkles, 
   Users, 
@@ -15,6 +15,20 @@ import { CTA } from '../components/cta'
 
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance]);
+}
+
+function useMousePosition() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const updateMousePosition = (ev: MouseEvent) => {
+      setMousePosition({ x: ev.clientX, y: ev.clientY })
+    }
+    window.addEventListener('mousemove', updateMousePosition)
+    return () => window.removeEventListener('mousemove', updateMousePosition)
+  }, [])
+
+  return mousePosition
 }
 
 const Synergies = [
@@ -63,6 +77,18 @@ const values = [
   }
 ]
 
+const subtleFloat = {
+  initial: { y: 0 },
+  animate: {
+    y: [-2, 2, -2],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+}
+
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -88,6 +114,8 @@ export default function AboutPage() {
       }
     }
   }
+
+  const { x, y } = useMousePosition()
 
   return (
     <motion.main 
@@ -125,14 +153,19 @@ export default function AboutPage() {
           />
         </motion.div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
-          <motion.h1 
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4"
+          style={{
+            transform: `translate(${x ? (x - window.innerWidth / 2) * 0.01 : 0}px, ${y ? (y - window.innerHeight / 2) * 0.01 : 0}px)`
+          }}
+        >
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 0.8,
+              duration: 1.2,
               type: "spring",
-              stiffness: 100 
+              stiffness: 70,
+              damping: 20
             }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white"
           >
@@ -194,13 +227,20 @@ export default function AboutPage() {
               <motion.div 
                 key={stat.label}
                 variants={fadeInUp}
-                whileHover={{ scale: 1.05 }}
-                className="text-center"
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: "rgba(236, 72, 153, 0.05)",
+                }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="text-center p-6 rounded-xl cursor-pointer"
               >
                 <div className="flex justify-center mb-4">
                   <motion.div 
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
+                    variants={subtleFloat}
+                    initial="initial"
+                    animate="animate"
                     className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
                       p-2.5 flex items-center justify-center"
                   >
@@ -232,8 +272,11 @@ export default function AboutPage() {
       >
         <motion.div 
           className="container mx-auto px-4"
+          initial={{ rotateY: -10 }}
+          whileInView={{ rotateY: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
           style={{
-            rotateY: useParallax(scrollYProgress, -20),
             transformStyle: "preserve-3d"
           }}
         >
@@ -259,10 +302,17 @@ export default function AboutPage() {
                 variants={fadeInUp}
                 whileHover={{ 
                   y: -10,
-                  boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)"
+                  boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)",
+                  backgroundColor: "rgba(236, 72, 153, 0.03)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 30
                 }}
                 className="p-8 rounded-2xl bg-purple-500/5 border border-purple-500/10 
-                  hover:border-purple-500/30 transition-all duration-300"
+                  hover:border-purple-500/30 transition-all duration-300 cursor-pointer"
               >
                 <motion.div 
                   className="mb-4"
@@ -313,14 +363,26 @@ export default function AboutPage() {
                 className="group"
               >
                 <motion.div 
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: "0 20px 40px rgba(236, 72, 153, 0.2)"
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25
+                  }}
                   className="relative mb-4 rounded-xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0118] via-transparent opacity-60" />
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-[#0a0118] via-transparent opacity-60"
+                    whileHover={{ opacity: 0.4 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  />
                   <img
                     src={synergy.image}
                     alt={synergy.name}
-                    className="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full aspect-square object-cover transition-all duration-700 group-hover:scale-110"
                   />
                 </motion.div>
                 <h3 className="text-xl font-semibold text-purple-100 mb-2">{synergy.name}</h3>
