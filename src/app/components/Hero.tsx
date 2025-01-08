@@ -5,6 +5,7 @@ import { Button } from "./ui/button"
 import { BloomingFlower } from "./BloomingFlower"
 import { Feat } from "./Feat"
 import { useRef, useEffect } from "react"
+import { FloatingImage } from "./FloatingImage"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -119,6 +120,8 @@ export function Hero() {
                 transformStyle: "preserve-3d"
               }}
             >
+              <FloatingImage scrollProgress={scrollYProgress} />
+
               <motion.div 
                 className="w-full max-w-md"
                 style={{ 
