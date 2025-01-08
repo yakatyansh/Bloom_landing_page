@@ -159,6 +159,9 @@ export default function AboutPage() {
     offset: ["start start", "end end"]
   })
 
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+
   const rotateX = useTransform(scrollYProgress, [0, 1], [0, 45])
   const rotateY = useTransform(scrollYProgress, [0, 1], [0, -45])
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.2, 1])
@@ -208,7 +211,10 @@ export default function AboutPage() {
         >
           <motion.div 
             className="absolute inset-0 z-0"
-            style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '100%']), opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0]) }}
+            style={{ 
+              y: backgroundY, 
+              opacity: backgroundOpacity 
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-purple-800/10 to-transparent" />
             <motion.div 
@@ -295,7 +301,7 @@ export default function AboutPage() {
                 { icon: <Heart />, number: 50000000, label: "Mindful Moments", suffix: "+" },
                 { icon: <Globe2 />, number: 190, label: "Countries", suffix: "+" },
                 { icon: <Sparkles />, number: 4.9, label: "User Rating", suffix: "/5" }
-              ].map((stat, index) => (
+              ].map((stat) => (
                 <motion.div 
                   key={stat.label}
                   variants={fadeInUp}
