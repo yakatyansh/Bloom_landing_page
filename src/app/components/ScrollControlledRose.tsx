@@ -8,12 +8,12 @@ interface ScrollControlledRoseProps {
 
 // Add these new animations and effects
 const petalHoverAnimation = {
-  scale: 1.05,
-  filter: "drop-shadow(0px 0px 4px rgba(236, 72, 153, 0.5))",
+  scale: 1.03,
+  filter: "drop-shadow(0px 0px 3px rgba(236, 72, 153, 0.3))",
   transition: {
     type: "spring",
-    stiffness: 300,
-    damping: 20
+    stiffness: 250,
+    damping: 25
   }
 }
 
@@ -78,7 +78,7 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
         style={{ 
           maxWidth: '400px', 
           maxHeight: '400px',
-          filter: "drop-shadow(0px 0px 10px rgba(236, 72, 153, 0.2))",
+          filter: "drop-shadow(0px 0px 8px rgba(236, 72, 153, 0.15))",
           rotate: rotationProgress
         }}
       >
@@ -132,37 +132,37 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
 
         <defs>
           <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#FF3B9A" />
-            <stop offset="100%" stopColor="#EC4899" />
+            <stop offset="0%" stopColor="#F9A8D4" />
+            <stop offset="100%" stopColor="#EC4899" stopOpacity="0.9" />
           </radialGradient>
           
           <radialGradient id="innerGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#EC4899" />
-            <stop offset="100%" stopColor="#E879F9" />
+            <stop offset="0%" stopColor="#F0ABFC" />
+            <stop offset="100%" stopColor="#E879F9" stopOpacity="0.85" />
           </radialGradient>
           
           <radialGradient id="middleGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#D946EF" />
-            <stop offset="100%" stopColor="#C026D3" />
+            <stop offset="0%" stopColor="#E879F9" />
+            <stop offset="100%" stopColor="#D946EF" stopOpacity="0.8" />
           </radialGradient>
           
           <radialGradient id="outerGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#A855F7" />
-            <stop offset="100%" stopColor="#9333EA" />
+            <stop offset="0%" stopColor="#D946EF" />
+            <stop offset="100%" stopColor="#C026D3" stopOpacity="0.75" />
           </radialGradient>
         </defs>
 
         <motion.g 
           style={{ opacity: stamenOpacity }}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.05 }}
         >
           <motion.circle 
             cx="100" 
             cy="100" 
             r="6" 
-            fill="#A855F7"
+            fill="#F0ABFC"
             style={{
-              filter: "drop-shadow(0px 0px 3px rgba(168, 85, 247, 0.5))"
+              filter: "drop-shadow(0px 0px 2px rgba(168, 85, 247, 0.3))"
             }}
           />
           
@@ -170,13 +170,13 @@ export function ScrollControlledRose({ scrollProgress }: ScrollControlledRosePro
             <motion.path
               key={`stamen-${rotation}`}
               d="M100,100 L105,92 A1.5,1.5 0 1,1 105,92"
-              stroke="#A855F7"
+              stroke="#E879F9"
               strokeWidth="1.5"
-              fill="#D946EF"
+              fill="#F0ABFC"
               transform={`rotate(${rotation}, 100, 100)`}
               whileHover={{
-                scale: 1.2,
-                filter: "drop-shadow(0px 0px 2px rgba(217, 70, 239, 0.5))"
+                scale: 1.1,
+                filter: "drop-shadow(0px 0px 2px rgba(217, 70, 239, 0.3))"
               }}
             />
           ))}
