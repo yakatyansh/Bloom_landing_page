@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import { Feat } from "./Feat"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
-
+import { ParticleBackground } from '../components/ParticleBackground'
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -47,8 +47,8 @@ export function Hero() {
 
   return (
     <>
-
       <div className="fixed inset-x-0 bottom-8 flex justify-center z-50 pointer-events-none">
+      <ParticleBackground />
         <motion.div 
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 1 }}

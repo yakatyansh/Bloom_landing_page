@@ -13,6 +13,7 @@ import {
   Puzzle,
   Zap
 } from "lucide-react"
+import { ParticleBackground } from '../components/ParticleBackground'
 
 function useMousePosition() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -90,6 +91,7 @@ export default function FeaturesPage() {
 
   return (
     <>
+      <ParticleBackground />
       <ScrollProgress />
       <motion.main 
         className="bg-[#0a0118]"
