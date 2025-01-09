@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion"
 import { Button } from "./ui/button"
-import { BloomingFlower } from "./BloomingFlower"
 import { Feat } from "./Feat"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
@@ -40,6 +39,11 @@ export function Hero() {
 
 
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
+
+  // Add these new transforms
+  const flowerBloomOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
+  const flowerBloomScale = useTransform(scrollYProgress, [0, 0.2], [0.5, 1])
+  const flowerRotate = useTransform(scrollYProgress, [0, 0.2], [0, 360])
 
   return (
     <>
@@ -132,7 +136,6 @@ export function Hero() {
                 }}
                 initial={{ opacity: 0 }}
               >
-                <BloomingFlower scrollProgress={scrollYProgress} />
               </motion.div>
 
               <motion.div 
@@ -218,6 +221,21 @@ export function Hero() {
         </div>
       </div>
       
+      <motion.div 
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px]"
+        style={{
+          opacity: flowerBloomOpacity,
+          scale: flowerBloomScale,
+          rotate: flowerRotate,
+        }}
+      >
+        <img 
+          src="/assets/bloomingflower.gif"
+          alt="Blooming Flower"
+          className="w-full h-full object-contain"
+        />
+      </motion.div>
+
       <Feat />
     </>
   )

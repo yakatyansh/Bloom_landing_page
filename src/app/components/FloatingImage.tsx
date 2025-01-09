@@ -1,5 +1,5 @@
 'use client'
-import { motion, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MotionValue } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
@@ -9,10 +9,6 @@ interface FloatingImageProps {
 
 export function FloatingImage({ scrollProgress }: FloatingImageProps) {
   const [isChillGuy, setIsChillGuy] = useState(false)
-  
-  // Smoother position transforms with updated ranges
-  const x = useTransform(scrollProgress, [0, 0.15], [0, -200])
-  const y = useTransform(scrollProgress, [0, 0.15], [0, -100])
 
   useEffect(() => {
     const unsubscribe = scrollProgress.onChange(latest => {
@@ -23,11 +19,7 @@ export function FloatingImage({ scrollProgress }: FloatingImageProps) {
 
   return (
     <motion.div
-      className="absolute"
-      style={{
-        x,
-        y
-      }}
+      className="absolute right-[20%] top-1/2 transform -translate-y-1/2"
       animate={{
         x: ['-8vw', '8vw', '-8vw'],  // Reduced range for smoother movement
         y: ['8vh', '24vh', '8vh'],   // Reduced range for smoother movement
