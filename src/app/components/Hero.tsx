@@ -6,13 +6,13 @@ import { Feat } from "./Feat"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
 import { ParticleBackground } from '../components/ParticleBackground'
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   })
-
 
   const flowerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1])
   const flowerScale = useTransform(scrollYProgress, [0, 0.15], [0.8, 1])
@@ -24,9 +24,7 @@ export function Hero() {
  
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
-
   const percentage = useMotionValue(0)
-  
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange(latest => {
@@ -36,8 +34,6 @@ export function Hero() {
     return () => unsubscribe()
   }, [scrollYProgress])
 
-
-
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
 
   // Add these new transforms
@@ -45,10 +41,13 @@ export function Hero() {
   const flowerBloomScale = useTransform(scrollYProgress, [0, 0.2], [0.5, 1])
   const flowerRotate = useTransform(scrollYProgress, [0, 0.2], [0, 360])
 
+  // Text indicator opacity
+  const indicatorOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1])
+
   return (
     <>
       <div className="fixed inset-x-0 bottom-8 flex justify-center z-50 pointer-events-none">
-      <ParticleBackground />
+        <ParticleBackground />
         <motion.div 
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 1 }}
@@ -234,6 +233,13 @@ export function Hero() {
           alt="Blooming Flower"
           className="w-full h-full object-contain"
         />
+      </motion.div>
+
+      <motion.div
+        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white text-lg"
+        style={{ opacity: indicatorOpacity }}
+      >
+        Hover on the chill guy to see the magic
       </motion.div>
 
       <Feat />

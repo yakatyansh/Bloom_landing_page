@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { MotionValue } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { Howl } from 'howler'
 
 interface FloatingImageProps {
   scrollProgress: MotionValue<number>
@@ -9,6 +10,19 @@ interface FloatingImageProps {
 
 export function FloatingImage({ scrollProgress }: FloatingImageProps) {
   const [isChillGuy, setIsChillGuy] = useState(false)
+  const [audio, setAudio] = useState<Howl | null>(null)
+
+  useEffect(() => {
+    const newAudio = new Howl({
+      src: ["/assets/music.mp3"],
+      html5: true
+    })
+    setAudio(newAudio)
+    console.log("Audio object created:", newAudio)
+    return () => {
+      newAudio.unload()
+    }
+  }, [])
 
   useEffect(() => {
     const unsubscribe = scrollProgress.onChange(latest => {
@@ -17,80 +31,39 @@ export function FloatingImage({ scrollProgress }: FloatingImageProps) {
     return () => unsubscribe()
   }, [scrollProgress])
 
+  const handleMouseEnter = () => {
+    if (audio) {
+      console.log('play')
+      audio.play()
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (audio) {
+      console.log('pause')
+      audio.pause()
+    }
+  }
+
   return (
     <motion.div
       className="absolute right-[20%] top-1/2 transform -translate-y-1/2"
-      animate={{
-        x: ['-8vw', '8vw', '-8vw'],  // Reduced range for smoother movement
-        y: ['8vh', '24vh', '8vh'],   // Reduced range for smoother movement
-        rotate: [-3, 3, -3]          // Reduced rotation for subtler effect
-      }}
-      transition={{
-        x: {
-          duration: 25,              // Increased duration
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut"
-        },
-        y: {
-          duration: 20,              // Increased duration
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut"
-        },
-        rotate: {
-          duration: 15,              // Increased duration
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut"
-        }
-      }}
-      initial={{
-        x: '60vw',
-        y: '20vh'
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <motion.div
-        animate={{
-          y: [-15, 15, -15],        // Reduced range for smoother movement
-          scale: isChillGuy ? 1 : [0.95, 1.05, 0.95], // Subtler scale animation
-          rotate: isChillGuy ? 0 : [-1.5, 1.5, -1.5]  // Reduced rotation
+      <motion.img
+        key={isChillGuy ? 'chill' : 'not-chill'}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ 
+          duration: 0.8,          
+          ease: "easeInOut"       
         }}
-        transition={{
-          y: {
-            duration: 6,            // Increased duration
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          },
-          scale: {
-            duration: 2.5,          // Increased duration
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          },
-          rotate: {
-            duration: 3,            // Increased duration
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          }
-        }}
-      >
-        <motion.img
-          key={isChillGuy ? 'chill' : 'not-chill'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ 
-            duration: 0.8,          // Increased duration for smoother state change
-            ease: "easeInOut"       // Added easing
-          }}
-          src={isChillGuy ? '/assets/chill-guy.png' : '/assets/not-chill-guy.png'}
-          alt={isChillGuy ? "Chill character" : "Not chill character"}
-          className="w-48 h-48 md:w-64 md:h-64 object-contain"
-        />
-      </motion.div>
+        src={isChillGuy ? '/assets/chill-guy.png' : '/assets/not-chill-guy.png'}
+        alt={isChillGuy ? "Chill character" : "Not chill character"}
+        className="w-48 h-48 md:w-64 md:h-64 object-contain"
+      />
     </motion.div>
   )
 }
