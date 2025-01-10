@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import { MotionValue } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Howl } from 'howler'
 
 interface FloatingImageProps {
   scrollProgress: MotionValue<number>

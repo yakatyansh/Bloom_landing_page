@@ -41,8 +41,6 @@ export function Hero() {
   const flowerBloomScale = useTransform(scrollYProgress, [0, 0.2], [0.5, 1])
   const flowerRotate = useTransform(scrollYProgress, [0, 0.2], [0, 360])
 
-  // Text indicator opacity
-  const indicatorOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1])
 
   return (
     <>
