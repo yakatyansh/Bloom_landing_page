@@ -10,19 +10,6 @@ interface FloatingImageProps {
 
 export function FloatingImage({ scrollProgress }: FloatingImageProps) {
   const [isChillGuy, setIsChillGuy] = useState(false)
-  const [audio, setAudio] = useState<Howl | null>(null)
-
-  useEffect(() => {
-    const newAudio = new Howl({
-      src: ["/assets/music.mp3"],
-      html5: true
-    })
-    setAudio(newAudio)
-    console.log("Audio object created:", newAudio)
-    return () => {
-      newAudio.unload()
-    }
-  }, [])
 
   useEffect(() => {
     const unsubscribe = scrollProgress.onChange(latest => {
@@ -31,25 +18,9 @@ export function FloatingImage({ scrollProgress }: FloatingImageProps) {
     return () => unsubscribe()
   }, [scrollProgress])
 
-  const handleMouseEnter = () => {
-    if (audio) {
-      console.log('play')
-      audio.play()
-    }
-  }
-
-  const handleMouseLeave = () => {
-    if (audio) {
-      console.log('pause')
-      audio.pause()
-    }
-  }
-
   return (
     <motion.div
       className="absolute right-[20%] top-1/2 transform -translate-y-1/2"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <motion.img
         key={isChillGuy ? 'chill' : 'not-chill'}

@@ -235,13 +235,6 @@ export function Hero() {
         />
       </motion.div>
 
-      <motion.div
-        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white text-lg"
-        style={{ opacity: indicatorOpacity }}
-      >
-        Hover on the chill guy to see the magic
-      </motion.div>
-
       <Feat />
     </>
   )
