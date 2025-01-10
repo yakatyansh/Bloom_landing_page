@@ -2,7 +2,6 @@
 
 import { Hero } from "@/app/components/Hero"
 import { CTA } from "./components/cta"
-import { GlowingCursor } from "./components/GlowingCursor"
 import { motion, useScroll } from 'framer-motion'
 import { ParticleBackground } from './components/ParticleBackground'
 
@@ -19,7 +18,6 @@ export default function Home() {
   return (
     <>
       <ParticleBackground />
-      <GlowingCursor />
       <ScrollProgress />
       <main>
         <Hero />

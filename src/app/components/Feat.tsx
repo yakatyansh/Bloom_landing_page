@@ -148,40 +148,27 @@ export function Feat() {
                 ease: "easeOut"
               }}
               whileHover={{ 
-                y: -8,
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)"
+                scale: 1.05,
+                backgroundColor: "rgba(236, 72, 153, 0.03)"
               }}
-              className="p-6 rounded-2xl bg-purple-500/5 border border-purple-500/10 
-                hover:border-purple-500/30 transition-all duration-300 backdrop-blur-sm"
+              className="p-6 rounded-2xl border border-purple-500/10 hover:border-purple-500/30 
+                transition-colors duration-300 group cursor-pointer"
             >
               <motion.div 
-                whileHover={{ scale: 1.1, rotate: 10 }}
-                whileTap={{ scale: 0.9 }}
-                className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.gradient} 
-                  p-2.5 mb-4 flex items-center justify-center relative group`}
+                className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.gradient} 
+                  p-2 flex items-center justify-center mb-4 text-white`}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {feature.icon}
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#EC4899]/20 
-                    to-[#A855F7]/20 blur-xl group-hover:opacity-100 transition-all duration-300"
-                />
               </motion.div>
-              <motion.h3 
-                className="text-xl font-semibold text-purple-100 mb-2"
-                whileHover={{ scale: 1.02 }}
-              >
+              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-pink-500 
+                transition-colors duration-300">
                 {feature.title}
-              </motion.h3>
-              <motion.p 
-                initial={{ opacity: 0.8 }}
-                whileHover={{ opacity: 1 }}
-                className="text-purple-200/80"
-              >
+              </h3>
+              <p className="text-purple-200/60 leading-relaxed">
                 {feature.description}
-              </motion.p>
+              </p>
             </motion.div>
           ))}
         </motion.div>
