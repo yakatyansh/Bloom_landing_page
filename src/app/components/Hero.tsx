@@ -54,7 +54,7 @@ export function Hero() {
           }}
         >
           <p className="text-sm font-medium tracking-wider text-purple-200/80">
-            SCROLL TO FIX TEXT
+            SCROLL TO FIX TEXT AND MAKE THE GUY CHILL
           </p>
           
           <motion.p className="text-sm font-medium bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
