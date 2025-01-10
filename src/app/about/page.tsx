@@ -13,7 +13,6 @@ import {
 } from "lucide-react"
 import { CTA } from '../components/cta'
 import { ParticleBackground } from '../components/ParticleBackground'
-import { GlowingCursor } from '../components/GlowingCursor'
 import Image from 'next/image'
 
 function useParallax(value: MotionValue<number>, distance: number) {
@@ -196,7 +195,6 @@ export default function AboutPage() {
   return (
     <>
       <ParticleBackground />
-      <GlowingCursor />
       <ScrollProgress />
       <motion.main 
         className="bg-[#0a0118] perspective-1000"
