@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion"
 import { Button } from "./ui/button"
-import { Feat } from "./Feat"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
 import { ParticleBackground } from '../components/ParticleBackground'

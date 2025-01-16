@@ -31,12 +31,11 @@ const features: Feat[] = [
     gradient: "from-[#EC4899] to-[#A855F7]",
   },
   {
-    title: "and Many more...",
-    description: "join Bloom and enjoy all our features",
+    title: "And Many More",
+    description: "Explore a variety of other features designed to enhance your social media experience.",
     icon: <Sparkles className="w-20 h-20 text-white" />,
     gradient: "from-[#EC4899] to-[#A855F7]",
-
-  }
+  },
 ];
 
 export function Feat() {
@@ -46,20 +45,6 @@ export function Feat() {
     offset: ["start start", "end end"],
   });
 
-  const swipeAnimation = (index: number) => {
-    const offsetStart = index / features.length;
-    const offsetEnd = (index + 1) / features.length;
-
-    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]);
-  };
-
-  const opacityAnimation = (index: number) => {
-    const offsetStart = index / features.length;
-    const offsetEnd = (index + 1) / features.length;
-
-    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
-  };
-
   return (
     <section
       ref={containerRef}
@@ -68,7 +53,7 @@ export function Feat() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }} // Even quicker fade-in
+        transition={{ duration: 0.3 }}
         className="absolute inset-0"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-transparent" />
@@ -79,7 +64,7 @@ export function Feat() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.3, ease: "easeOut" }} // Faster fade-in
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="text-center mb-16 px-4 pt-20"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
@@ -92,8 +77,15 @@ export function Feat() {
         </motion.div>
 
         {features.map((feature, index) => {
-          const xAnimation = swipeAnimation(index);
-          const opacity = opacityAnimation(index);
+          // Use useTransform directly inside map function to access scrollYProgress
+          const offsetStart = index / features.length;
+          const offsetEnd = (index + 1) / features.length;
+          const xAnimation = useTransform(
+            scrollYProgress,
+            [offsetStart, offsetEnd],
+            [100, 0]
+          );
+          const opacity = useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
 
           return (
             <motion.div
@@ -102,7 +94,7 @@ export function Feat() {
               style={{
                 x: xAnimation,
                 opacity,
-                transition: "all 0.3s ease-in-out", // Quicker horizontal movement
+                transition: "all 0.3s ease-in-out",
               }}
             >
               <motion.div
@@ -110,7 +102,7 @@ export function Feat() {
                   p-8 flex items-center justify-center mb-12 text-white`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, ease: "easeOut" }} // Fast fade-in for icons
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 {feature.icon}
               </motion.div>
