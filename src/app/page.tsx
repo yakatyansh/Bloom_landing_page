@@ -4,6 +4,7 @@ import { Hero } from "@/app/components/Hero"
 import { CTA } from "./components/cta"
 import { motion, useScroll } from 'framer-motion'
 import { ParticleBackground } from './components/ParticleBackground'
+import { Feat } from "./components/Feat"
 
 const ScrollProgress = () => {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <ScrollProgress />
       <main>
         <Hero />
+        <Feat/>
         <CTA />
       </main>
     </>
