@@ -77,7 +77,6 @@ export function Feat() {
         </motion.div>
 
         {features.map((feature, index) => {
-          // Use useTransform directly inside map function to access scrollYProgress
           const offsetStart = index / features.length;
           const offsetEnd = (index + 1) / features.length;
           const xAnimation = useTransform(
@@ -94,7 +93,6 @@ export function Feat() {
               style={{
                 x: xAnimation,
                 opacity,
-                transition: "all 0.3s ease-in-out",
               }}
             >
               <motion.div

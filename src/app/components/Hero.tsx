@@ -5,6 +5,7 @@ import { Button } from "./ui/button"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
 import { ParticleBackground } from '../components/ParticleBackground'
+import { Feat } from "./Feat"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -12,11 +13,6 @@ export function Hero() {
     target: containerRef,
     offset: ["start start", "end start"]
   })
-
-  const flowerOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1])
-  const flowerScale = useTransform(scrollYProgress, [0, 0.15], [0.8, 1])
-  const flowerY = useTransform(scrollYProgress, [0.15, 0.3], [0, -50])
-
   const textRotateX = useTransform(scrollYProgress, [0, 0.15], [-10, 0])
   const textRotateY = useTransform(scrollYProgress, [0, 0.15], [10, 0])
   const textY = useTransform(scrollYProgress, [0.15, 0.3], [0, 20])
@@ -31,14 +27,9 @@ export function Hero() {
       percentage.set(value)
     })
     return () => unsubscribe()
-  }, [scrollYProgress])
+  }, [scrollYProgress, percentage])
 
   const contentOpacity = useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
-
-  const flowerBloomOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
-  const flowerBloomScale = useTransform(scrollYProgress, [0, 0.2], [0.5, 1])
-  const flowerRotate = useTransform(scrollYProgress, [0, 0.2], [0, 360])
-
 
   return (
     <>
@@ -52,7 +43,7 @@ export function Hero() {
           }}
         >
           <p className="text-sm font-medium tracking-wider text-purple-200/80">
-            SCROLL TO FIX TEXT AND MAKE THE GUY CHILL
+            SCROLL TO FIX TEXT
           </p>
           
           <motion.p className="text-sm font-medium bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
@@ -120,18 +111,6 @@ export function Hero() {
               }}
             >
               <FloatingImage scrollProgress={scrollYProgress} />
-
-              <motion.div 
-                className="w-full max-w-md"
-                style={{ 
-                  opacity: flowerOpacity,
-                  scale: flowerScale,
-                  y: flowerY,
-                  transformStyle: "preserve-3d",
-                }}
-                initial={{ opacity: 0 }}
-              >
-              </motion.div>
 
               <motion.div 
                 style={{ 
@@ -215,7 +194,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-      
     </>
   )
 }
