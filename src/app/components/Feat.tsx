@@ -8,7 +8,6 @@ import {
   Leaf,
   Medal,
   Zap,
-  Globe,
   Timer,
   Battery,
   Map,
