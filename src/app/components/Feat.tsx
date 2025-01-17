@@ -45,6 +45,18 @@ export function Feat() {
     offset: ["start start", "end end"],
   });
 
+  const xAnimations = features.map((_, index) => {
+    const offsetStart = index / features.length;
+    const offsetEnd = (index + 1) / features.length;
+    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]);
+  });
+
+  const opacities = features.map((_, index) => {
+    const offsetStart = index / features.length;
+    const offsetEnd = (index + 1) / features.length;
+    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
+  });
+
   return (
     <section
       ref={containerRef}
@@ -76,45 +88,34 @@ export function Feat() {
           </p>
         </motion.div>
 
-        {features.map((feature, index) => {
-          const offsetStart = index / features.length;
-          const offsetEnd = (index + 1) / features.length;
-          const xAnimation = useTransform(
-            scrollYProgress,
-            [offsetStart, offsetEnd],
-            [100, 0]
-          );
-          const opacity = useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
-
-          return (
+        {features.map((feature, index) => (
+          <motion.div
+            key={feature.title}
+            className="flex flex-col items-center justify-center min-h-screen px-8"
+            style={{
+              x: xAnimations[index],
+              opacity: opacities[index],
+            }}
+          >
             <motion.div
-              key={feature.title}
-              className="flex flex-col items-center justify-center min-h-screen px-8"
-              style={{
-                x: xAnimation,
-                opacity,
-              }}
+              className={`w-36 h-36 rounded-full bg-gradient-to-r ${feature.gradient} 
+                p-8 flex items-center justify-center mb-12 text-white`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <motion.div
-                className={`w-36 h-36 rounded-full bg-gradient-to-r ${feature.gradient} 
-                  p-8 flex items-center justify-center mb-12 text-white`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              >
-                {feature.icon}
-              </motion.div>
-              <div className="max-w-xl text-center">
-                <h3 className="text-4xl font-semibold text-white mb-6">
-                  {feature.title}
-                </h3>
-                <p className="text-xl text-purple-200/70 leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
+              {feature.icon}
             </motion.div>
-          );
-        })}
+            <div className="max-w-xl text-center">
+              <h3 className="text-4xl font-semibold text-white mb-6">
+                {feature.title}
+              </h3>
+              <p className="text-xl text-purple-200/70 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );

@@ -5,7 +5,6 @@ import { Button } from "./ui/button"
 import { useRef, useEffect } from "react"
 import { FloatingImage } from "./FloatingImage"
 import { ParticleBackground } from '../components/ParticleBackground'
-import { Feat } from "./Feat"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
