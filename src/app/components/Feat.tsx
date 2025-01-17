@@ -48,13 +48,15 @@ export function Feat() {
   const xAnimations = features.map((_, index) => {
     const offsetStart = index / features.length;
     const offsetEnd = (index + 1) / features.length;
-    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]);
+    var y = useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]);
+    return y 
   });
 
   const opacities = features.map((_, index) => {
     const offsetStart = index / features.length;
     const offsetEnd = (index + 1) / features.length;
-    return useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
+    var x = useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
+    return x
   });
 
   return (
