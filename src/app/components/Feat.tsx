@@ -45,18 +45,15 @@ export function Feat() {
     offset: ["start start", "end end"],
   });
 
-  const xAnimations = features.map((_, index) => {
+  // Create transforms for each feature at the component level
+  const animations = features.map((_, index) => {
     const offsetStart = index / features.length;
     const offsetEnd = (index + 1) / features.length;
-    var y = useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]);
-    return y 
-  });
-
-  const opacities = features.map((_, index) => {
-    const offsetStart = index / features.length;
-    const offsetEnd = (index + 1) / features.length;
-    var x = useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1]);
-    return x
+    
+    return {
+      y: useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]),
+      opacity: useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1])
+    };
   });
 
   return (
@@ -95,8 +92,8 @@ export function Feat() {
             key={feature.title}
             className="flex flex-col items-center justify-center min-h-screen px-8"
             style={{
-              x: xAnimations[index],
-              opacity: opacities[index],
+              y: animations[index].y,
+              opacity: animations[index].opacity,
             }}
           >
             <motion.div
