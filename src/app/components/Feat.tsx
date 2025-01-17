@@ -45,16 +45,26 @@ export function Feat() {
     offset: ["start start", "end end"],
   });
 
-  // Create transforms for each feature at the component level
-  const animations = features.map((_, index) => {
-    const offsetStart = index / features.length;
-    const offsetEnd = (index + 1) / features.length;
-    
-    return {
-      y: useTransform(scrollYProgress, [offsetStart, offsetEnd], [100, 0]),
-      opacity: useTransform(scrollYProgress, [offsetStart, offsetEnd], [0, 1])
-    };
-  });
+  // Pre-calculate the input ranges for each feature
+  const inputRanges = features.map((_, index) => [
+    index / features.length,
+    (index + 1) / features.length,
+  ]);
+
+  // Create separate transform arrays for y position and opacity
+  const yTransforms = [
+    useTransform(scrollYProgress, inputRanges[0], [100, 0]),
+    useTransform(scrollYProgress, inputRanges[1], [100, 0]),
+    useTransform(scrollYProgress, inputRanges[2], [100, 0]),
+    useTransform(scrollYProgress, inputRanges[3], [100, 0]),
+  ];
+
+  const opacityTransforms = [
+    useTransform(scrollYProgress, inputRanges[0], [0, 1]),
+    useTransform(scrollYProgress, inputRanges[1], [0, 1]),
+    useTransform(scrollYProgress, inputRanges[2], [0, 1]),
+    useTransform(scrollYProgress, inputRanges[3], [0, 1]),
+  ];
 
   return (
     <section
@@ -92,8 +102,8 @@ export function Feat() {
             key={feature.title}
             className="flex flex-col items-center justify-center min-h-screen px-8"
             style={{
-              y: animations[index].y,
-              opacity: animations[index].opacity,
+              y: yTransforms[index],
+              opacity: opacityTransforms[index],
             }}
           >
             <motion.div
