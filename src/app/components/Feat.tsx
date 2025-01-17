@@ -96,25 +96,7 @@ const features: Feat[] = [
 
 export function Feat() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
 
-  // Pre-calculate the input ranges for each feature
-  const inputRanges = features.map((_, index) => [
-    index / features.length,
-    (index + 1) / features.length,
-  ]);
-
-  // Create transform arrays for x position and opacity
-  const xTransforms = features.map((_, index) => 
-    useTransform(scrollYProgress, inputRanges[index], [200, 0])
-  );
-
-  const opacityTransforms = features.map((_, index) => 
-    useTransform(scrollYProgress, inputRanges[index], [0, 1])
-  );
 
   return (
     <section
@@ -147,39 +129,60 @@ export function Feat() {
           </p>
         </motion.div>
 
-        {features.map((feature, index) => (
-          <motion.div
-            key={feature.title}
-            className="flex flex-col items-center justify-center min-h-screen px-8"
-            style={{
-              x: xTransforms[index],
-              opacity: opacityTransforms[index],
-            }}
-          >
+        {features.map((feature, index) => {
+          const elementRef = useRef<HTMLDivElement>(null);
+          const { scrollYProgress: elementProgress } = useScroll({
+            target: elementRef,
+            offset: ["start end", "center center"]
+          });
+
+          const x = useTransform(
+            elementProgress,
+            [0, 1],
+            [200, 0]
+          );
+
+          const opacity = useTransform(
+            elementProgress,
+            [0, 1],
+            [0, 1]
+          );
+
+          return (
             <motion.div
-              className={`w-36 h-36 rounded-full bg-gradient-to-r ${feature.gradient} 
-                p-8 flex items-center justify-center mb-12 text-white relative`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              ref={elementRef}
+              key={feature.title}
+              className="flex flex-col items-center justify-center min-h-screen px-8"
+              style={{
+                x,
+                opacity
+              }}
             >
-              {feature.icon}
-              {feature.emoji && (
-                <span className="absolute -top-2 -right-2 text-2xl">
-                  {feature.emoji}
-                </span>
-              )}
+              <motion.div
+                className={`w-36 h-36 rounded-full bg-gradient-to-r ${feature.gradient} 
+                  p-8 flex items-center justify-center mb-12 text-white relative`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                {feature.icon}
+                {feature.emoji && (
+                  <span className="absolute -top-2 -right-2 text-2xl">
+                    {feature.emoji}
+                  </span>
+                )}
+              </motion.div>
+              <div className="max-w-xl text-center">
+                <h3 className="text-4xl font-semibold text-white mb-6">
+                  {feature.title}
+                </h3>
+                <p className="text-xl text-purple-200/70 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
             </motion.div>
-            <div className="max-w-xl text-center">
-              <h3 className="text-4xl font-semibold text-white mb-6">
-                {feature.title}
-              </h3>
-              <p className="text-xl text-purple-200/70 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
