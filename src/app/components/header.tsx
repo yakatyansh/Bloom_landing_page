@@ -33,27 +33,27 @@ export function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo with bloom animation */}
+          {/* Logo with basic color animation */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Link 
               href="/" 
-              className="text-xl font-bold bg-gradient-to-r from-[#EC4899] to-[#A855F7] 
-                bg-clip-text text-transparent relative group"
+              className="text-xl font-bold relative group"
             >
               <motion.span
-                animate={{ 
-                  backgroundPosition: ['0%', '100%'],
-                  opacity: [0.8, 1] 
-                }}
+                animate={{ color: ['#EC4899', '#A855F7', '#EC4899'] }}
                 transition={{ 
                   duration: 3,
                   repeat: Infinity,
                   repeatType: 'reverse'
                 }}
-                className="relative z-10"
+                className="relative z-10 text-transparent"
+                style={{
+                  background: 'linear-gradient(to right, #EC4899, #A855F7)',
+                  WebkitBackgroundClip: 'text'
+                }}
               >
                 BloomScroll
               </motion.span>
